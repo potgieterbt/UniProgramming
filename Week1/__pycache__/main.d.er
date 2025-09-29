@@ -1,0 +1,11 @@
+##[pylyzer] failed /home/ben/University/Programming/Week1/main.py 1759146675 307
+.argparse = pyimport "argparse"
+
+.name: {"World"}
+.parser: Never
+
+.args: Never
+
+
+
+
