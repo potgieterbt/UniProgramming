@@ -19,15 +19,24 @@ if __name__ == "__main__":
     while should_close is False:
         if menu_index == 0:
             try:
-                option = int(input("""1 - Add Student
-2 - Remove Student
-3 - Edit Grades
-4 - List Grades
-5 - Exit
+                option = int(input("""1 - Edit Data
+2 - List Grades
+3 - Exit
 """))
             except ValueError:
                 print("invalid input, please input a number")
                 continue
+            match(option):
+                case 1:
+                    menu_index = 2
+                    continue
+                case 2:
+                    menu_index = 1
+                    continue
+                case 3:
+                    print("Good Bye")
+                    should_close = True
+
         elif menu_index == 1:
             try:
                 option = int(input(
@@ -38,7 +47,8 @@ if __name__ == "__main__":
 5 - List the average mark
 6 - List grade achievmement amounts
 7 - List number of fails
-8 - Exit
+8 - Back
+9 - Exit
 ~ """))
             except ValueError:
                 print("invalid input, please input a number")
@@ -161,7 +171,46 @@ if __name__ == "__main__":
                     print("Fails:", fail_count)
 
                 case 8:
+                    menu_index = 0
+                case 9:
                     print("Good Bye")
                     should_close = True
                 case _:
                     print("Please input a valid number")
+        elif menu_index == 2:
+
+            try:
+                option = int(input("""1 - Add Student
+2 - Remove Student
+3 - Edit Student
+4 - Back
+5 - Exit
+"""))
+            except ValueError:
+                print("invalid input, please input a number")
+                continue
+            match(option):
+                case 1:
+                    menu_index = 3
+                case 2:
+                    menu_index = 4
+                case 3:
+                    menu_index = 5
+                case 4:
+                    menu_index = 0
+                case 5:
+                    print("Good Bye")
+                    should_close = True
+        elif menu_index == 3:
+            # Add Student
+            input("Please enter Student's full name: ")
+            while (grade := input("Please enter the grade(enter q to finish):")):
+                try:
+                    grade = int(grade)
+            except ValueError:
+                print("invalid input, please input a number")
+                continue
+        elif menu_index == 4:
+            # Remove Student
+        elif menu_index == 5:
+            # Edit Student
