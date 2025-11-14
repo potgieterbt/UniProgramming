@@ -6,12 +6,7 @@ grades = [
     [36],
     [66, 20],
 ]
-percentages = []
-for student_index in range(len(students)):
-    percentages.append([])
-    for grade_index in range(len(grades[student_index])):
-        percentages[student_index].append(
-            round((grades[student_index][grade_index] / total_marks)*100, 2))
+
 
 if __name__ == "__main__":
     should_close = False
@@ -54,6 +49,12 @@ if __name__ == "__main__":
                 print("invalid input, please input a number")
                 continue
 
+            percentages = []
+            for student_index in range(len(students)):
+                percentages.append([])
+                for grade_index in range(len(grades[student_index])):
+                    percentages[student_index].append(
+                        round((grades[student_index][grade_index] / total_marks)*100, 2))
             match(option):
                 case 1:
                     for student_index in range(len(students)):
@@ -203,14 +204,37 @@ if __name__ == "__main__":
                     should_close = True
         elif menu_index == 3:
             # Add Student
-            input("Please enter Student's full name: ")
-            while (grade := input("Please enter the grade(enter q to finish):")):
+            name = input("Please enter Student's full name: ")
+            tmp_grades = []
+            while (grade := input("Please enter the grade(enter q to finish):") != "q"):
                 try:
                     grade = int(grade)
+                except ValueError:
+                    print("invalid input, please input a number")
+                    continue
+                tmp_grades.append(grade)
+            students.append(name)
+            grades.append(tmp_grades)
+            menu_index = 2
+            print("Student added Successfully")
+        elif menu_index == 4:
+            # Remove Student
+            # print students with number next to them as index
+            for index, name in enumerate(students):
+                print(index + 1, "-", name)
+            try:
+                index = int(input(
+                    "Input the index of the student you want to remove(type q to cancel): ") != "q")
             except ValueError:
                 print("invalid input, please input a number")
                 continue
-        elif menu_index == 4:
-            # Remove Student
+            if index not in range(1, len(students)+1):
+                print("please input a valid index")
+            index -= 1
+            students.pop(index)
+            grades.pop(index)
+            print("Student removed successfully")
+            menu_index = 2
         elif menu_index == 5:
             # Edit Student
+            print("edit")
