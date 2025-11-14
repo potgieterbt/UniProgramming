@@ -206,7 +206,7 @@ if __name__ == "__main__":
             # Add Student
             name = input("Please enter Student's full name: ")
             tmp_grades = []
-            while (grade := input("Please enter the grade(enter q to finish):") != "q"):
+            while (grade := input("Please enter the grade(enter q to finish):")):
                 try:
                     grade = int(grade)
                 except ValueError:
