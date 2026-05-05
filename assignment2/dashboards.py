@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox, ttk
 import db
+import config
 
 
 class StudentDashboard(tk.Frame):
@@ -33,9 +34,9 @@ class StudentDashboard(tk.Frame):
             self.entries[key] = ent
 
         tk.Button(self, text="Update Information",
-                  command=self.save).pack(pady=10)
+                  command=self.save, bg=config.GREEN, fg="white").pack(pady=10)
         tk.Button(self, text="Logout",
-                  command=lambda: controller.show_frame("LoginFrame")).pack()
+                  command=lambda: controller.show_frame("LoginFrame"), bg=config.DANGER).pack()
 
     def refresh_data(self):
         conn = db.get_connection()
@@ -78,12 +79,20 @@ class LecturerDashboard(tk.Frame):
 
         self.tree = ttk.Treeview(self, columns=(
             "ID", "First Name", "Last Name", "Course", "Phone"), show="headings")
+
+        vertscrlbar = ttk.Scrollbar(
+            self, orient='vertical', command=self.tree.yview)
+
+        vertscrlbar.pack(side='right', fill='x')
+
+        self.tree.configure(xscrollcommand=vertscrlbar.set)
+
         self.tree.heading("ID", text="ID")
         self.tree.heading("First Name", text="First Name")
         self.tree.heading("Last Name", text="Last Name")
         self.tree.heading("Course", text="Course")
         self.tree.heading("Phone", text="Phone")
-        self.tree.pack(fill="both", expand=True, padx=5)
+        self.tree.pack(fill="both", expand=False, padx=5, side='right')
 
         tk.Button(self, text="Refresh List",
                   command=self.refresh_data).pack(pady=5)

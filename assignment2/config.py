@@ -7,7 +7,9 @@ DB_CONFIG = {
 }
 
 
-BG = "#F0F4F8"
+# BG = "#F0F4F8"
+BG = "#f0f0f0"
+GREEN = "#4CAF50"
 PRIMARY = "#1D4E89"
 SECONDARY = "#3A86FF"
 ACCENT = "#EBF3FF"

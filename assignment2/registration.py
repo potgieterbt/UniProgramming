@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import messagebox
 import password_utl as pswd
 import db
+import config
 
 
 class RegistrationFrame(tk.Frame):
@@ -38,9 +39,9 @@ class RegistrationFrame(tk.Frame):
             self.entries[attr] = ent
 
         tk.Button(self, text="Complete Registration",
-                  command=self.submit).pack(pady=10)
+                  command=self.submit, bg=config.GREEN).pack(pady=10)
         tk.Button(self, text="Cancel",
-                  command=lambda: controller.show_frame("LoginFrame")).pack()
+                  command=lambda: controller.show_frame("LoginFrame"), bg=config.DANGER).pack()
 
     def submit(self):
         data = {k: v.get() for k, v in self.entries.items()}
