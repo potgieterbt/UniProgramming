@@ -1,7 +1,6 @@
-# import mysql
-import mariadb
+import mysql.connector
 import config
 
 
 def get_connection():
-    return mariadb.connect(**config.DB_CONFIG)
+    return mysql.connector.connect(**config.DB_CONFIG)

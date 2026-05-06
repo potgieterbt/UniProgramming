@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox, ttk
 import db
-import config
 
 
 class StudentDashboard(tk.Frame):
@@ -34,9 +33,9 @@ class StudentDashboard(tk.Frame):
             self.entries[key] = ent
 
         tk.Button(self, text="Update Information",
-                  command=self.save, bg=config.GREEN, fg="white").pack(pady=10)
+                  command=self.save).pack(pady=10)
         tk.Button(self, text="Logout",
-                  command=lambda: controller.show_frame("LoginFrame"), bg=config.DANGER).pack()
+                  command=lambda: controller.show_frame("LoginFrame")).pack()
 
     def refresh_data(self):
         conn = db.get_connection()
@@ -77,22 +76,33 @@ class LecturerDashboard(tk.Frame):
         self.controller = controller
         tk.Label(self, text="Student Record Lecturer View").pack(pady=10)
 
-        self.tree = ttk.Treeview(self, columns=(
-            "ID", "First Name", "Last Name", "Course", "Phone"), show="headings")
+        tree_frame = tk.Frame(self)
+        tree_frame.pack(fill="both", expand=True, padx=10)
 
-        vertscrlbar = ttk.Scrollbar(
-            self, orient='vertical', command=self.tree.yview)
+        self.fields = [
+            "First Name",
+            "Last Name",
+            "Pronouns",
+            "DOB",
+            "Home Address",
+            "Term-Time Address",
+            "Emergency Name",
+            "Emergency Number",
+            "Course",
+        ]
 
-        vertscrlbar.pack(side='right', fill='x')
+        self.tree = ttk.Treeview(
+            tree_frame, columns=self.fields, show="headings")
 
-        self.tree.configure(xscrollcommand=vertscrlbar.set)
+        h_scroll = ttk.Scrollbar(
+            tree_frame, orient="horizontal", command=self.tree.xview)
+        self.tree.configure(xscrollcommand=h_scroll.set)
 
-        self.tree.heading("ID", text="ID")
-        self.tree.heading("First Name", text="First Name")
-        self.tree.heading("Last Name", text="Last Name")
-        self.tree.heading("Course", text="Course")
-        self.tree.heading("Phone", text="Phone")
-        self.tree.pack(fill="both", expand=False, padx=5, side='right')
+        for col in self.fields:
+            self.tree.heading(col, text=col)
+
+        self.tree.pack(side="top", fill="both", expand=True)
+        h_scroll.pack(side="bottom", fill="x")
 
         tk.Button(self, text="Refresh List",
                   command=self.refresh_data).pack(pady=5)
@@ -105,8 +115,11 @@ class LecturerDashboard(tk.Frame):
         conn = db.get_connection()
         cursor = conn.cursor(dictionary=True)
         cursor.execute(
-            "SELECT student_id, first_name, last_name, course, emergency_contact_number FROM Students")
+            "SELECT * FROM Students")
         for row in cursor.fetchall():
             self.tree.insert("", tk.END, values=(
-                row['student_id'], row['first_name'], row['last_name'], row['course'], row['emergency_contact_number']))
-            conn.close()
+                row['first_name'], row['last_name'], row['pronouns'],
+                row['dob'], row['home_address'], row['term_address'],
+                row['emergency_contact_name'], row['emergency_contact_number'],
+                row['course']))
+        conn.close()

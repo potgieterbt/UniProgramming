@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS Logins (
 );
 
 CREATE TABLE IF NOT EXISTS Students (
-    student_id INT PRIMARY KEY,
+    student_id INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(100) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
     pronouns VARCHAR(20),

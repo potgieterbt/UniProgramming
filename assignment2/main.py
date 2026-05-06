@@ -9,12 +9,15 @@ class Application(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("University Student Management System")
-        self.geometry("400x300")
-        self.resizable = False
+        self.geometry("700x600")
 
-        self.container = tk.Frame(self, width=400, height=300)
-        self.container.pack()
-        # self.container.pack(fill="both", expand=False)
+        self.container = tk.Frame(self, width=700, height=600)
+        self.container.pack(fill="both", expand=True)
+
+        self.container.grid_propagate(False)
+
+        self.container.grid_rowconfigure(0, weight=1)
+        self.container.grid_columnconfigure(0, weight=1)
 
         self.current_user_id = None
         self.frames = {}
@@ -31,10 +34,8 @@ class Application(tk.Tk):
     def show_frame(self, page_name):
         frame = self.frames[page_name]
         frame.tkraise()
-        try:
+        if hasattr(frame, "refresh_data"):
             frame.refresh_data()
-        except Exception as e:
-            print(f"Could not refresh data: {e}")
 
 
 if __name__ == "__main__":

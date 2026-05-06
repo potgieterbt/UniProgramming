@@ -7,7 +7,7 @@ import config
 
 class LoginFrame(tk.Frame):
     def __init__(self, parent, controller):
-        super().__init__(parent, bg=config.BG, width=400, height=300)
+        super().__init__(parent, bg=config.BG)
         self.controller = controller
 
         tk.Label(self, text="Login Page", bg=config.BG).pack(pady=30)
